@@ -1,0 +1,15 @@
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.vscode/
+*.db
+*.sqlite3
+.env
+.DS_Store
+
+# Không commit mẫu mã độc hay file upload
+uploads/
+samples/
+tests/fixtures/*.exe
+tests/fixtures/*.dll
