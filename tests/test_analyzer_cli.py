@@ -1,6 +1,7 @@
 import json
 import subprocess
 import sys
+from app.analysis.analyzer import analyze_file
 from pathlib import Path
 
 
@@ -110,3 +111,13 @@ def test_pe_with_ordinal_import():
             ],
         }
     ]
+
+def test_analyze_file_returns_report():
+    sample = PROJECT_ROOT / "tests" / "fixtures" / "hello-pe.exe"
+
+    report = analyze_file(sample)
+
+    assert isinstance(report, dict)
+    assert report["file_name"] == "hello-pe.exe"
+    assert report["section_count"] == 1
+    assert report["sections"][0]["name"] == ".text"
