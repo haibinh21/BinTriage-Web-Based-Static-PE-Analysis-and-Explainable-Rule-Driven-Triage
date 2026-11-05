@@ -27,3 +27,14 @@ Chạy từ thư mục gốc của repo.
 
 Các bài kiểm thử hiện kiểm tra mã thoát và thông báo lỗi khi thiếu
 đường dẫn, file không tồn tại và file không phải PE hợp lệ.
+
+### File mẫu kiểm thử
+
+`tests/fixtures/hello-pe.exe` là PE32+ tối giản, được tạo bằng
+Python cho bài thực hành đọc cấu trúc PE.
+
+File có kích thước 1024 byte, một section `.text` và không có imports.
+Các bài kiểm thử chỉ đọc file để kiểm tra báo cáo JSON của analyzer.
+
+Mẫu chứa nhiều byte đệm 0, nên pefile có thể đưa ra cảnh báo
+về tỷ lệ byte 0 cao. Analyzer giữ cảnh báo này trong báo cáo.

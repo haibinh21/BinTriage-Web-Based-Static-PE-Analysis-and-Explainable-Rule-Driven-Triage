@@ -72,3 +72,22 @@ def test_valid_pe():
     assert section["file_offset"] == 512
     assert section["raw_size"] == 512
     assert section["preview_hex"] == "31 c0 c3"
+
+def test_pe_with_named_import():
+    sample = PROJECT_ROOT / "tests" / "fixtures" / "pe-with-import.exe"
+
+    result = run_analyzer(str(sample))
+
+    assert result.returncode == 0
+    assert result.stderr == ""
+
+    report = json.loads(result.stdout)
+
+    assert report["imports"] == [
+        {
+            "dll": "KERNEL32.dll",
+            "functions": [
+                {"name": "ExitProcess", "ordinal": None}
+            ],
+        }
+    ]

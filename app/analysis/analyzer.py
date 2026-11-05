@@ -42,7 +42,25 @@ imports = []
 
 for entry in getattr(pe, "DIRECTORY_ENTRY_IMPORT", []):
     dll_name = entry.dll.decode("ascii", errors="replace")
-    imports.append(dll_name)
+    functions = []
+
+    for imported_function in entry.imports:
+        function_name = None
+
+        if imported_function.name is not None:
+            function_name = imported_function.name.decode(
+                "ascii", errors="replace"
+            )
+
+        functions.append({
+            "name": function_name,
+            "ordinal": imported_function.ordinal,
+        })
+
+    imports.append({
+        "dll": dll_name,
+        "functions": functions,
+    })
 
 report = {
     "file_name": path.name,
