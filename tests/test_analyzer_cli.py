@@ -1,3 +1,4 @@
+import json
 import subprocess
 import sys
 from pathlib import Path
@@ -42,3 +43,32 @@ def test_invalid_pe(tmp_path):
     assert result.returncode == 1
     assert "File không phải PE hợp lệ hoặc bị hỏng" in result.stderr
     assert result.stdout == ""
+
+def test_valid_pe():
+    sample = PROJECT_ROOT / "tests" / "fixtures" / "hello-pe.exe"
+
+    result = run_analyzer(str(sample))
+
+    assert result.returncode == 0
+    assert result.stderr == ""
+
+    report = json.loads(result.stdout)
+
+    assert report["file_name"] == "hello-pe.exe"
+    assert report["file_size"] == 1024
+    assert report["machine"] == "0x8664"
+    assert report["pe_type"] == "0x20b"
+    assert report["imports"] == []
+    assert report["sha256"] == (
+        "94ed43781cf8ac9d18a30c603284fea846787"
+        "f2c24a05658be5d720e9e275883"
+    )
+
+    assert report["section_count"] == 1
+    assert len(report["sections"]) == 1
+
+    section = report["sections"][0]
+    assert section["name"] == ".text"
+    assert section["file_offset"] == 512
+    assert section["raw_size"] == 512
+    assert section["preview_hex"] == "31 c0 c3"
