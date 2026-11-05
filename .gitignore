@@ -16,3 +16,4 @@ tests/fixtures/*.dll
 # PE vô hại được tạo cho bài kiểm thử
 !tests/fixtures/hello-pe.exe
 !tests/fixtures/pe-with-import.exe
+!tests/fixtures/pe-with-ordinal.exe

@@ -38,3 +38,16 @@ Các bài kiểm thử chỉ đọc file để kiểm tra báo cáo JSON của a
 
 Mẫu chứa nhiều byte đệm 0, nên pefile có thể đưa ra cảnh báo
 về tỷ lệ byte 0 cao. Analyzer giữ cảnh báo này trong báo cáo.
+
+### Phân tích imports
+
+Mỗi DLL trong báo cáo có danh sách hàm được import, gồm tên và ordinal.
+Trường không có giá trị được biểu diễn bằng null trong JSON.
+
+Fixture `tests/fixtures/pe-with-import.exe` được tạo từ PE mẫu vô hại
+bằng cách bổ sung bảng import cho KERNEL32.dll và hàm ExitProcess.
+Bộ kiểm thử xác nhận cấu trúc imports trong báo cáo JSON.
+
+Fixture `tests/fixtures/pe-with-ordinal.exe` khai báo import bằng
+ordinal 7 từ KERNEL32.dll để kiểm thử nhánh không có tên hàm.
+Số 7 là giá trị thử nghiệm, không đại diện cho tên hàm cụ thể.

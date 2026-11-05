@@ -91,3 +91,22 @@ def test_pe_with_named_import():
             ],
         }
     ]
+
+def test_pe_with_ordinal_import():
+    sample = PROJECT_ROOT / "tests" / "fixtures" / "pe-with-ordinal.exe"
+
+    result = run_analyzer(str(sample))
+
+    assert result.returncode == 0
+    assert result.stderr == ""
+
+    report = json.loads(result.stdout)
+
+    assert report["imports"] == [
+        {
+            "dll": "KERNEL32.dll",
+            "functions": [
+                {"name": None, "ordinal": 7}
+            ],
+        }
+    ]
