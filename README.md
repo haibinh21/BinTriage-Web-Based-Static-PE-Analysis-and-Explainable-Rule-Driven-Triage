@@ -16,3 +16,14 @@ tên DLL được import và cảnh báo của parser.
 | 0 | Đã xuất báo cáo JSON |
 | 1 | Không đọc được file hoặc PE không hợp lệ |
 | 2 | Sai số lượng đối số |
+
+## Kiểm thử
+
+Chạy từ thư mục gốc của repo.
+
+```sh
+.venv/bin/python -m pytest -v
+```
+
+Các bài kiểm thử hiện kiểm tra mã thoát và thông báo lỗi khi thiếu
+đường dẫn, file không tồn tại và file không phải PE hợp lệ.
